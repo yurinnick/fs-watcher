@@ -11,7 +11,7 @@ class FileFilterApp < Sinatra::Base
 
   get "/:sec" do
     content_type :json
-    file_list = Dir.glob('/home')
+    file_list = Dir.glob('/home/**/*')
     .select { |path| File.ctime(path) > (Time.now - params[:sec].to_i) }
 
     sorted = file_list.map { |f| File.basename(f).length }.sort
