@@ -11,7 +11,7 @@ class FileFilterApp < Sinatra::Base
 
   get "/:sec" do
     content_type :json
-    file_list = Dir.glob('/home/**/*')
+    file_list = Dir.glob('/home/**/*').reject { |path| File.directory? path }
     .select { |path| File.ctime(path) > (Time.now - params[:sec].to_i) }
 
     median =  if file_list.empty?
